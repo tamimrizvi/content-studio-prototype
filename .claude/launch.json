@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "storybook",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-lc", "npm run storybook -- --ci"],
+      "port": 6006
+    },
+    {
+      "name": "next-dev",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-lc", "npm run dev"],
+      "port": 3000
+    }
+  ]
+}

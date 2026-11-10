@@ -1,26 +1,70 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Dark mode is the `.dark` class on <html>. Semantic tokens flip on their
+   own, so components should almost never need a `dark:` variant. */
+@custom-variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background: var(--surface-background);
+    color: var(--content-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body-sm);
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ds-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+@keyframes ds-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+@keyframes ds-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+@keyframes ds-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@theme inline {
+  --animate-spin: ds-spin 0.7s linear infinite;
+  --animate-indeterminate: ds-indeterminate 1.4s ease-in-out infinite;
+  --animate-pulse: ds-pulse 1.6s ease-in-out infinite;
+  --animate-pop-in: ds-pop-in 140ms ease-out;
+  --animate-fade-in: ds-fade-in 140ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
